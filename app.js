@@ -7,7 +7,18 @@ const addBtn = document.getElementById("todo-button");
 const todoInput = document.getElementById("todo-input");
 const todoUl = document.getElementById("todo-ul");
 
-let todos = [];
+// todos dizisini localStorage'daki verile ile guncelle
+//! eger localStorage tofos adinda bir item bulunmaz ise
+let todos = JSON.parse(localStorage.getItem("TODOS")) || [];
+console.log(todos);
+
+const renderSavedTodos = () => {
+  todos.forEach((todo) => {
+    createListElement(todo);
+  });
+};
+
+renderSavedTodos();
 
 addBtn.addEventListener("click", () => {
   if (todoInput.value.trim() === "") {
@@ -23,12 +34,13 @@ addBtn.addEventListener("click", () => {
     createListElement(newTodo);
 
     todos.push(newTodo);
+    localStorage.setItem("TODOS", JSON.stringify(todos));
     console.log(todos);
     todoInput.value = "";
   }
 });
 
-const createListElement = (newTodo) => {
+function createListElement(newTodo) {
   const { id, completed, text } = newTodo; //! destroy
 
   //? yeni bir li element olustur ve bu elemente obje icersindeki id degerini ve comp. class ata.
@@ -63,7 +75,7 @@ const createListElement = (newTodo) => {
   console.log(li);
 
   todoUl.appendChild(li);
-};
+}
 //! ul elementinin cocuklarindan herhangi birisinden bir event gelirse bunu tespit et ve gerekeni yap(capturing)
 todoUl.addEventListener("click", (e) => {
   console.log(e.target);
