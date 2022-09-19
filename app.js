@@ -7,6 +7,8 @@ const addBtn = document.getElementById("todo-button");
 const todoInput = document.getElementById("todo-input");
 const todoUl = document.getElementById("todo-ul");
 
+let todos = [];
+
 addBtn.addEventListener("click", () => {
   if (todoInput.value.trim() === "") {
     alert("Please enter new to-do");
@@ -19,6 +21,9 @@ addBtn.addEventListener("click", () => {
 
     //! yeni bir lielementi olusturup bunu DOM'a bas
     createListElement(newTodo);
+
+    todos.push(newTodo);
+    console.log(todos);
     todoInput.value = "";
   }
 });
@@ -59,12 +64,17 @@ const createListElement = (newTodo) => {
 
   todoUl.appendChild(li);
 };
-//? capturing with target
+//! ul elementinin cocuklarindan herhangi birisinden bir event gelirse bunu tespit et ve gerekeni yap(capturing)
 todoUl.addEventListener("click", (e) => {
   console.log(e.target);
   //! event bir delete butonundan geldi ise
   if (e.target.classList.contains("fa-trash")) {
     e.target.parentElement.remove();
+  }
+  //! event bir oket butonundan geldi ise
+  if (e.target.classList.contains("fa-check")) {
+    //? ilgili li elementinden checked adinda bir class varsa bunu sil aksi takdirde ekle (DOM)
+    e.target.parentElement.classList.toggle("completed");
   }
 });
 
