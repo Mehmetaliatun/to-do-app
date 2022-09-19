@@ -59,6 +59,14 @@ const createListElement = (newTodo) => {
 
   todoUl.appendChild(li);
 };
+//? capturing with target
+todoUl.addEventListener("click", (e) => {
+  console.log(e.target);
+  //! event bir delete butonundan geldi ise
+  if (e.target.classList.contains("fa-trash")) {
+    e.target.parentElement.remove();
+  }
+});
 
 //? enter tusu ile ekleme mumkun olsun
 todoInput.addEventListener("keydown", (e) => {
