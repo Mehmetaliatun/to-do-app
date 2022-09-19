@@ -16,17 +16,25 @@ addBtn.addEventListener("click", () => {
       completed: false,
       text: todoInput.value,
     };
+
+    //! yeni bir lielementi olusturup bunu DOM'a bas
     createListElement(newTodo);
     todoInput.value = "";
   }
 });
 
 const createListElement = (newTodo) => {
+  const { id, completed, text } = newTodo; //! destroy
+
   //? yeni bir li element olustur ve bu elemente obje icersindeki id degerini ve comp. class ata.
   const li = document.createElement("li");
   //   li.id = newTodo.id;
-  li.setAttribute("id", newTodo.id);
+  li.setAttribute("id", id);
   //! yukaridaki 2 yontem ile girilen degeri id'ye aktardik.
+
+  //! altta yazan her iki kod ayni islevi goruyor.
+  //   newTodo.completed ? li.classList.add("completed") : "";
+  completed && li.classList.add("completed");
 
   //? okey ikonu olustur ve li elementine bagla
   const okIcon = document.createElement("i");
@@ -35,7 +43,7 @@ const createListElement = (newTodo) => {
 
   //? todo basligi icin bir p elementi ve yazi serisi olustur ve li'ye bagla.
   const p = document.createElement("p");
-  const pTextNode = document.createTextNode(newTodo.text);
+  const pTextNode = document.createTextNode(text);
   p.appendChild(pTextNode);
   li.appendChild(p);
 
