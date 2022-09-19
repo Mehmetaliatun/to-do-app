@@ -76,15 +76,24 @@ function createListElement(newTodo) {
 
   todoUl.appendChild(li);
 }
+
 //! ul elementinin cocuklarindan herhangi birisinden bir event gelirse bunu tespit et ve gerekeni yap(capturing)
 todoUl.addEventListener("click", (e) => {
   console.log(e.target);
+
+  const id = e.target.parentElement.getAttribute("id");
   //! event bir delete butonundan geldi ise
   if (e.target.classList.contains("fa-trash")) {
+    //? delete butonunun parent'ini DOM'dan si
     e.target.parentElement.remove();
-  }
-  //! event bir oket butonundan geldi ise
-  if (e.target.classList.contains("fa-check")) {
+
+    //? dizinin ilgili elementini sil
+    todos = todos.filter((todo) => todo.id !== Number(id));
+
+    //? todos dizisinin son halini localStorage sakla
+    localStorage.setItem("TODOS", JSON.stringify(todos));
+  } else if (e.target.classList.contains("fa-check")) {
+    //! event bir oket butonundan geldi ise
     //? ilgili li elementinden checked adinda bir class varsa bunu sil aksi takdirde ekle (DOM)
     e.target.parentElement.classList.toggle("completed");
   }
